@@ -1,0 +1,98 @@
+.particleButtonWrapper {
+	position: relative;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.particleButton {
+	position: relative;
+	z-index: 2;
+
+	padding: 10px 18px;
+	border: none;
+	border-radius: 8px;
+
+	background: #8c5cff;
+	color: white;
+
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+
+	transition:
+		transform 120ms ease,
+		background-color 120ms ease;
+}
+
+.particleButton:hover {
+	background: #9f78ff;
+}
+
+.particleButton:active {
+	transform: scale(0.94);
+}
+
+.particleExplosion {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	width: 0;
+	height: 0;
+
+	z-index: 1;
+	pointer-events: none;
+}
+
+.particle {
+	--particle-x: 0px;
+	--particle-y: 0px;
+	--particle-rotation: 0deg;
+	--particle-delay: 0ms;
+
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	width: 18px;
+	height: 3px;
+	border-radius: 999px;
+
+	transform-origin: left center;
+	transform: rotate(var(--particle-rotation)) scaleX(0);
+
+	background: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 0),
+		#d9cbff 50%,
+		#ffffff
+	);
+
+	box-shadow: 0 0 7px #a982ff;
+
+	animation: particleExplosion 550ms ease-out forwards;
+	animation-delay: var(--particle-delay);
+}
+
+@keyframes particleExplosion {
+	0% {
+		opacity: 0;
+		transform: translate(0, 0) rotate(var(--particle-rotation)) scaleX(0);
+	}
+
+	15% {
+		opacity: 1;
+		transform: translate(
+				calc(var(--particle-x) * 0.15),
+				calc(var(--particle-y) * 0.15)
+			)
+			rotate(var(--particle-rotation)) scaleX(1);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(var(--particle-x), var(--particle-y))
+			rotate(var(--particle-rotation)) scaleX(0.15);
+	}
+}
