@@ -1,7 +1,12 @@
-import { daysOfTheWeek, months, startDay } from "../config/monthDayData.config";
+import { TDateConfig } from "../shared/types";
 
-export const useCurrentDate = (daysPast: number) => {
-	const currentDaysPast = startDay.days + daysPast;
+export const useCurrentDate = (
+	daysPast: number,
+	optionsConfig: TDateConfig,
+) => {
+	const { startDay, daysOfTheWeek, months } = optionsConfig;
+
+	const currentDaysPast = startDay.dayNumber + daysPast;
 
 	const currentDayIndex = (currentDaysPast - 1) % daysOfTheWeek.length;
 	const currentDayName = daysOfTheWeek[currentDayIndex];

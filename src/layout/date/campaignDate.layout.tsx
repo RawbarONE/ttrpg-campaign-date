@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCurrentDate } from "../../hooks/currentDate.hooks";
 import { useCampaignGlobal } from "../../hooks/globals.hooks";
 import * as S from "./date.layout.styles";
+import { getOptionsConfig } from "../../helpers/dateConfig.helper";
 
 export const CampaignDate: React.FC = () => {
 	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
@@ -10,7 +11,9 @@ export const CampaignDate: React.FC = () => {
 		null,
 	);
 
-	const date = useCurrentDate(activeCampaign?.daysPast ?? 0);
+	const optionsConfig = getOptionsConfig(activeCampaign?.optionsConfig);
+
+	const date = useCurrentDate(activeCampaign?.daysPast ?? 0, optionsConfig);
 
 	const addDay = async () => {
 		if (!activeCampaign) return;
