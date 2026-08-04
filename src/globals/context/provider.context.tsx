@@ -43,11 +43,13 @@ export const UiProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [optionsOpened, setOptionsOpened] = useState(false);
 
 	const toggleOptions = () => setOptionsOpened((prev) => !prev);
+	const closeOptions = () => setOptionsOpened(false);
 
 	const value = useMemo(
 		() => ({
 			optionsOpened,
 			toggleOptions,
+			closeOptions,
 		}),
 
 		[optionsOpened],

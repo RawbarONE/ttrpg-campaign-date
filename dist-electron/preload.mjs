@@ -18,12 +18,15 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
 		return electron.ipcRenderer.invoke(channel, ...omit);
 	}
 });
-electron.contextBridge.exposeInMainWorld("api", { campaignDays: {
-	list: () => electron.ipcRenderer.invoke("campaignDays:list"),
-	create: (name) => electron.ipcRenderer.invoke("campaignDays:create", name),
-	active: (id) => electron.ipcRenderer.invoke("campaignDays:active", id),
-	delete: (id) => electron.ipcRenderer.invoke("campaignDays:delete", id),
-	increase: (id) => electron.ipcRenderer.invoke("campaignDays:increase", id),
-	decrease: (id) => electron.ipcRenderer.invoke("campaignDays:decrease", id)
-} });
+electron.contextBridge.exposeInMainWorld("api", {
+	campaignDays: {
+		list: () => electron.ipcRenderer.invoke("campaignDays:list"),
+		create: (name) => electron.ipcRenderer.invoke("campaignDays:create", name),
+		active: (id) => electron.ipcRenderer.invoke("campaignDays:active", id),
+		delete: (id) => electron.ipcRenderer.invoke("campaignDays:delete", id),
+		increase: (id) => electron.ipcRenderer.invoke("campaignDays:increase", id),
+		decrease: (id) => electron.ipcRenderer.invoke("campaignDays:decrease", id)
+	},
+	config: { update: (id, config) => electron.ipcRenderer.invoke("config:update", id, config) }
+});
 //#endregion

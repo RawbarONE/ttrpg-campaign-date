@@ -29,6 +29,10 @@ dist-ssr
 *.sqlite
 *.sqlite3
 
+# AI/editor tool folders
+.claude/
+.windsurf/
+
 /prisma/migrations
 
 /generated/prisma

@@ -1,4 +1,5 @@
 import { ipcRenderer, contextBridge } from "electron";
+import { TDateConfig } from "../src/shared/types";
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld("ipcRenderer", {
@@ -33,5 +34,9 @@ contextBridge.exposeInMainWorld("api", {
 		delete: (id: number) => ipcRenderer.invoke("campaignDays:delete", id),
 		increase: (id: number) => ipcRenderer.invoke("campaignDays:increase", id),
 		decrease: (id: number) => ipcRenderer.invoke("campaignDays:decrease", id),
+	},
+	config: {
+		update: (id: number, config: TDateConfig) =>
+			ipcRenderer.invoke("config:update", id, config),
 	},
 });

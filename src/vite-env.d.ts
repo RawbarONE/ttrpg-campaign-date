@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+import { TDateConfig } from "./shared/types";
+
 export {};
 
 declare global {
@@ -14,6 +16,7 @@ declare global {
 						createdAt: Date;
 						updatedAt: Date;
 						daysPast: number;
+						optionsConfig: string;
 					}>
 				>;
 				create: (name: string) => Promise<{
@@ -22,6 +25,7 @@ declare global {
 					isActive: boolean;
 					createdAt: Date;
 					updatedAt: Date;
+					optionsConfig: string;
 				}>;
 				active: (id: number) => Promise<{
 					id: number;
@@ -29,12 +33,26 @@ declare global {
 					isActive: boolean;
 					createdAt: Date;
 					updatedAt: Date;
+					optionsConfig: string;
 				}>;
 				delete: (id: number) => Promise<{
 					id: number;
 				}>;
 				increase: (id: number) => Promise<{ id: number }>;
 				decrease: (id: number) => Promise<{ id: number }>;
+			};
+			config: {
+				update: (
+					id: number,
+					config: TDateConfig,
+				) => Promise<{
+					id: string;
+					name: string;
+					isActive: boolean;
+					createdAt: Date;
+					updatedAt: Date;
+					optionsConfig: string;
+				}>;
 			};
 		};
 
