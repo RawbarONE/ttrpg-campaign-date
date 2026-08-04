@@ -1,0 +1,37 @@
+import { TDateConfig } from "../shared/types";
+
+export const handleMonthNameChange = (
+	idx: number,
+	value: string,
+	configData: TDateConfig,
+): TDateConfig => {
+	const updatedMonths = [...configData.months];
+
+	updatedMonths[idx] = {
+		...updatedMonths[idx],
+		monthName: value,
+	};
+
+	return {
+		...configData,
+		months: updatedMonths,
+	};
+};
+
+export const handleMonthDaysChange = (
+	idx: number,
+	value: string,
+	configData: TDateConfig,
+) => {
+	const updatedDaysMonth = [...configData.months];
+
+	updatedDaysMonth[idx] = {
+		...updatedDaysMonth[idx],
+		days: Number(value),
+	};
+
+	return {
+		...configData,
+		months: updatedDaysMonth,
+	};
+};

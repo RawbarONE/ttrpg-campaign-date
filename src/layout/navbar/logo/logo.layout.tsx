@@ -58,10 +58,6 @@ const DropdownCampaign: React.FC = () => {
 		};
 	}, []);
 
-	useEffect(() => {
-		console.log("campaignName ", campaignsList);
-	}, [campaignsList]);
-
 	return (
 		<S.WrapperDropdown ref={dropdownRef}>
 			<S.ActiveCampaign onClick={dropdownState}>

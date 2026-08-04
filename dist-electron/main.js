@@ -916,7 +916,7 @@ var defaultDateConfig = {
 	]
 };
 //#endregion
-//#region electron/campaignDays.ipc.ts
+//#region electron/ipc/campaignDays.ipc.ts
 function registerCampaignDaysIpc() {
 	ipcMain.handle("campaignDays:list", async () => {
 		return (await getPrisma().campaign.findMany({ orderBy: { createdAt: "desc" } })).map((row) => ({ ...row }));
@@ -958,9 +958,20 @@ function registerCampaignDaysIpc() {
 	});
 }
 //#endregion
+//#region electron/ipc/optionsConfig.ipc.ts
+function registerOptionsConfigIpc() {
+	ipcMain.handle("config:update", async (_, campaignId, config) => {
+		return { ...await getPrisma().campaign.update({
+			where: { id: campaignId },
+			data: { optionsConfig: JSON.stringify(config) }
+		}) };
+	});
+}
+//#endregion
 //#region electron/index.ts
 function registerIpc() {
 	registerCampaignDaysIpc();
+	registerOptionsConfigIpc();
 }
 //#endregion
 //#region electron/main.ts

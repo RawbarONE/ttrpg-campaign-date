@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
-import { getPrisma } from "./db/prisma";
-import { Campaign } from "../generated/prisma/client";
-import { defaultDateConfig } from "../src/config/defaultDateData.config";
+import { getPrisma } from "../db/prisma";
+import { Campaign } from "../../generated/prisma/client";
+import { defaultDateConfig } from "../../src/config/defaultDateData.config";
 
 export function registerCampaignDaysIpc() {
 	ipcMain.handle("campaignDays:list", async () => {

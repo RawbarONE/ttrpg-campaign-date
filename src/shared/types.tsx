@@ -17,6 +17,7 @@ export type TCampaignGlobalValue = {
 export type TUiContext = {
 	optionsOpened: boolean;
 	toggleOptions: () => void;
+	closeOptions: () => void;
 };
 
 export type TMonth = {
