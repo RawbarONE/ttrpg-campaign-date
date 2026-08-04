@@ -23,4 +23,12 @@ dist-ssr
 *.sln
 *.sw?
 
+# SQLite database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+/prisma/migrations
+
 /generated/prisma
