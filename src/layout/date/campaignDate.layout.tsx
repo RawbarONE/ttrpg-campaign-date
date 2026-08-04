@@ -1,36 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCurrentDate } from "../../hooks/currentDate.hooks";
-import { TCampaign } from "../../shared/types";
+import { useCampaignGlobal } from "../../hooks/globals.hooks";
 import * as S from "./date.layout.styles";
 
 export const CampaignDate: React.FC = () => {
-	const [campaignsList, setCampaignsList] = useState<TCampaign[]>([]);
+	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
 
-	async function availableCampaigns() {
-		const list = await window.api.campaignDays.list();
-		setCampaignsList(list);
-	}
-
-	useEffect(() => {
-		availableCampaigns();
-	}, [campaignsList]);
-
-	const date = useCurrentDate(
-		campaignsList.find((c) => c.isActive)?.daysPast || 0,
+	const [clickAnimation, setClickAnimation] = useState<"add" | "remove" | null>(
+		null,
 	);
 
-	const addDay = () => {
-		window.api.campaignDays.increase(
-			campaignsList.find((c) => c.isActive)?.id || 0,
-		);
-		availableCampaigns();
+	const date = useCurrentDate(activeCampaign?.daysPast ?? 0);
+
+	const addDay = async () => {
+		if (!activeCampaign) return;
+
+		await window.api.campaignDays.increase(activeCampaign.id);
+		await refreshCampaignList();
+		setClickAnimation("add");
 	};
 
-	const removeDay = () => {
-		window.api.campaignDays.decrease(
-			campaignsList.find((c) => c.isActive)?.id || 0,
-		);
-		availableCampaigns();
+	const removeDay = async () => {
+		if (!activeCampaign) return;
+
+		await window.api.campaignDays.decrease(activeCampaign.id);
+		await refreshCampaignList();
+		setClickAnimation("remove");
 	};
 
 	return (
@@ -41,9 +36,21 @@ export const CampaignDate: React.FC = () => {
 					3E {date.currentYear}
 				</S.Date>
 				<S.ButtonArea>
-					<S.DateButton onClick={addDay}>Add</S.DateButton>
+					<S.DateButton
+						$active={clickAnimation === "add"}
+						onClick={addDay}
+						onAnimationEnd={() => setClickAnimation(null)}
+					>
+						Add
+					</S.DateButton>
 					<S.Text>Or</S.Text>
-					<S.DateButton onClick={removeDay}>Remove</S.DateButton>
+					<S.DateButton
+						$active={clickAnimation === "remove"}
+						onClick={removeDay}
+						onAnimationEnd={() => setClickAnimation(null)}
+					>
+						Remove
+					</S.DateButton>
 					<S.Text>Day</S.Text>
 				</S.ButtonArea>
 			</S.DateContainer>

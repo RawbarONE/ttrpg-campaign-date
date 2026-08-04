@@ -1,11 +1,14 @@
 import "./App.css";
 import { AppScaleWrapper } from "./components/scaled.main";
+import { CampaignProvider } from "./globals/context/campaignProvider.context";
 import { MainApp } from "./layout/main/main.layout";
 
 function App() {
 	return (
 		<AppScaleWrapper>
-			<MainApp />
+			<CampaignProvider>
+				<MainApp />
+			</CampaignProvider>
 		</AppScaleWrapper>
 	);
 }

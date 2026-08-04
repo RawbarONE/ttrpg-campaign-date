@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import * as S from "./logo.layout.styles";
 import LogoImg from "../../../assets/logo/dnd-logo.png";
-import { TCampaign } from "../../../shared/types";
+import { useCampaignGlobal } from "../../../hooks/globals.hooks";
 import { CreateCampaign } from "./createCampaign.logo.layout";
+import * as S from "./logo.layout.styles";
 
 export const Logo: React.FC = () => {
 	return (
@@ -16,43 +16,40 @@ export const Logo: React.FC = () => {
 };
 
 const DropdownCampaign: React.FC = () => {
-	const [campaigns, setCampaigns] = useState<TCampaign[]>([]);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-	async function availableCampaigns() {
-		const list = await window.api.campaignDays.list();
-		setCampaigns(list);
-	}
+	const { campaignsList, activeCampaign, refreshCampaignList } =
+		useCampaignGlobal();
 
-	async function setActiveCampaign(id: number) {
+	const setActiveCampaign = async (id: number) => {
 		await window.api.campaignDays.active(id);
-		availableCampaigns();
+		refreshCampaignList();
 		setDropdownOpen(false);
-	}
+	};
 
-	async function deleteCampaign(id: number) {
+	const deleteCampaign = async (id: number) => {
 		await window.api.campaignDays.delete(id);
-		availableCampaigns();
-	}
+		refreshCampaignList();
+	};
 
 	const campaignName = useMemo((): string => {
-		if (campaigns.length === 0) return "Campaign Name";
-		return campaigns.find((c) => c.isActive)?.name || "Campaign Name";
-	}, [campaigns]);
+		if (campaignsList.length === 0) return "Campaign Name";
+		return activeCampaign?.name ?? "Campaign Name";
+	}, [campaignsList, activeCampaign]);
 
 	const dropdownState = () => {
 		setDropdownOpen((prev) => !prev);
 	};
 
 	useEffect(() => {
-		function handleClickOutside(event: MouseEvent) {
+		const handleClickOutside = (event: MouseEvent) => {
 			if (!dropdownRef.current) return;
 
 			if (!dropdownRef.current.contains(event.target as Node)) {
 				setDropdownOpen(false);
 			}
-		}
+		};
 
 		document.addEventListener("mousedown", handleClickOutside);
 
@@ -62,12 +59,8 @@ const DropdownCampaign: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		availableCampaigns();
-	}, []);
-
-	useEffect(() => {
-		console.log("campaignName ", campaigns);
-	}, [campaigns]);
+		console.log("campaignName ", campaignsList);
+	}, [campaignsList]);
 
 	return (
 		<S.WrapperDropdown ref={dropdownRef}>
@@ -77,9 +70,9 @@ const DropdownCampaign: React.FC = () => {
 			{dropdownOpen && (
 				<S.CampaignList>
 					<S.CreateCampaignWrapper>
-						<CreateCampaign availableCampaigns={availableCampaigns} />
+						<CreateCampaign availableCampaigns={refreshCampaignList} />
 					</S.CreateCampaignWrapper>
-					{campaigns.map((c) => (
+					{campaignsList.map((c) => (
 						<S.CampaignElement key={c.id}>
 							<S.CampaignName onClick={() => setActiveCampaign(c.id)}>
 								{c.name}
