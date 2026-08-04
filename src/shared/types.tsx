@@ -12,3 +12,8 @@ export type TCampaignGlobalValue = {
 	activeCampaign: TCampaign | undefined;
 	refreshCampaignList: () => Promise<void>;
 };
+
+export type TUiContext = {
+	optionsOpened: boolean;
+	toggleOptions: () => void;
+};
