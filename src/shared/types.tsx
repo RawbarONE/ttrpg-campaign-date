@@ -5,6 +5,7 @@ export type TCampaign = {
 	createdAt: Date;
 	updatedAt: Date;
 	daysPast: number;
+	optionsConfig: string;
 };
 
 export type TCampaignGlobalValue = {
@@ -16,4 +17,22 @@ export type TCampaignGlobalValue = {
 export type TUiContext = {
 	optionsOpened: boolean;
 	toggleOptions: () => void;
+};
+
+export type TMonth = {
+	monthNumber: number;
+	monthName: string;
+	days: number;
+};
+
+export type TStartDay = {
+	monthNumber: number;
+	dayNumber: number;
+	year: number;
+};
+
+export type TDateConfig = {
+	startDay: TStartDay;
+	daysOfTheWeek: string[];
+	months: TMonth[];
 };

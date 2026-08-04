@@ -772,7 +772,7 @@ var config = {
 	"clientVersion": "7.9.1",
 	"engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
 	"activeProvider": "sqlite",
-	"inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Campaign {\n  id        Int      @id @default(autoincrement())\n  name      String   @default(\"Campaign Name\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  daysPast  Int      @default(0)\n  isActive  Boolean  @default(false)\n}\n",
+	"inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Campaign {\n  id            Int      @id @default(autoincrement())\n  name          String   @default(\"Campaign Name\")\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n  daysPast      Int      @default(0)\n  isActive      Boolean  @default(false)\n  optionsConfig String?\n}\n",
 	"runtimeDataModel": {
 		"models": {},
 		"enums": {},
@@ -783,10 +783,10 @@ var config = {
 		"graph": ""
 	}
 };
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Campaign\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"daysPast\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}");
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Campaign\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"daysPast\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"optionsConfig\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}");
 config.parameterizationSchema = {
-	strings: JSON.parse("[\"where\",\"Campaign.findUnique\",\"Campaign.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"Campaign.findFirst\",\"Campaign.findFirstOrThrow\",\"Campaign.findMany\",\"data\",\"Campaign.createOne\",\"Campaign.createMany\",\"Campaign.createManyAndReturn\",\"Campaign.updateOne\",\"Campaign.updateMany\",\"Campaign.updateManyAndReturn\",\"create\",\"update\",\"Campaign.upsertOne\",\"Campaign.deleteOne\",\"Campaign.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"Campaign.groupBy\",\"Campaign.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"name\",\"createdAt\",\"updatedAt\",\"daysPast\",\"isActive\",\"equals\",\"not\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"contains\",\"startsWith\",\"endsWith\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
-	graph: "NQsQCRwAACgAMB0AAAQAEB4AACgAMB8CAAAAASABACoAISFAACsAISJAACsAISMCACkAISQgACwAIQEAAAABACABAAAAAQAgCRwAACgAMB0AAAQAEB4AACgAMB8CACkAISABACoAISFAACsAISJAACsAISMCACkAISQgACwAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAGHwIAAAABIAEAAAABIUAAAAABIkAAAAABIwIAAAABJCAAAAABAQgAAAkAIAYfAgAAAAEgAQAAAAEhQAAAAAEiQAAAAAEjAgAAAAEkIAAAAAEBCAAACwAwAQgAAAsAMAYfAgA0ACEgAQAyACEhQAAzACEiQAAzACEjAgA0ACEkIAA1ACECAAAAAQAgCAAADgAgBh8CADQAISABADIAISFAADMAISJAADMAISMCADQAISQgADUAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBRUAAC0AIBYAAC4AIBcAADEAIBgAADAAIBkAAC8AIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjAgAbACEkIAAeACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjAgAbACEkIAAeACENFQAAIAAgFgAAJwAgFwAAIAAgGAAAIAAgGQAAIAAgJQIAAAABJgIAJgAhJwIAAAAEKAIAAAAEKQIAAAABKgIAAAABKwIAAAABLAIAAAABDhUAACAAIBgAACUAIBkAACUAICUBAAAAASYBACQAIScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAAQsVAAAgACAYAAAjACAZAAAjACAlQAAAAAEmQAAiACEnQAAAAAQoQAAAAAQpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEFFQAAIAAgGAAAIQAgGQAAIQAgJSAAAAABJiAAHwAhBRUAACAAIBgAACEAIBkAACEAICUgAAAAASYgAB8AIQglAgAAAAEmAgAgACEnAgAAAAQoAgAAAAQpAgAAAAEqAgAAAAErAgAAAAEsAgAAAAECJSAAAAABJiAAIQAhCxUAACAAIBgAACMAIBkAACMAICVAAAAAASZAACIAISdAAAAABChAAAAABClAAAAAASpAAAAAAStAAAAAASxAAAAAAQglQAAAAAEmQAAjACEnQAAAAAQoQAAAAAQpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEOFQAAIAAgGAAAJQAgGQAAJQAgJQEAAAABJgEAJAAhJwEAAAAEKAEAAAAEKQEAAAABKgEAAAABKwEAAAABLAEAAAABLQEAAAABLgEAAAABLwEAAAABCyUBAAAAASYBACUAIScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAAQ0VAAAgACAWAAAnACAXAAAgACAYAAAgACAZAAAgACAlAgAAAAEmAgAmACEnAgAAAAQoAgAAAAQpAgAAAAEqAgAAAAErAgAAAAEsAgAAAAEIJQgAAAABJggAJwAhJwgAAAAEKAgAAAAEKQgAAAABKggAAAABKwgAAAABLAgAAAABCRwAACgAMB0AAAQAEB4AACgAMB8CACkAISABACoAISFAACsAISJAACsAISMCACkAISQgACwAIQglAgAAAAEmAgAgACEnAgAAAAQoAgAAAAQpAgAAAAEqAgAAAAErAgAAAAEsAgAAAAELJQEAAAABJgEAJQAhJwEAAAAEKAEAAAAEKQEAAAABKgEAAAABKwEAAAABLAEAAAABLQEAAAABLgEAAAABLwEAAAABCCVAAAAAASZAACMAISdAAAAABChAAAAABClAAAAAASpAAAAAAStAAAAAASxAAAAAAQIlIAAAAAEmIAAhACEAAAAAAAEwAQAAAAEBMEAAAAABBTACAAAAATECAAAAATICAAAAATMCAAAAATQCAAAAAQEwIAAAAAEAAAAABRUABhYABxcACBgACRkACgAAAAAABRUABhYABxcACBgACRkACgECAQIDAQUGAQYHAQcIAQkKAQoMAgsNAwwPAQ0RAg4SBBETARIUARMVAhoYBRsZCw"
+	strings: JSON.parse("[\"where\",\"Campaign.findUnique\",\"Campaign.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"Campaign.findFirst\",\"Campaign.findFirstOrThrow\",\"Campaign.findMany\",\"data\",\"Campaign.createOne\",\"Campaign.createMany\",\"Campaign.createManyAndReturn\",\"Campaign.updateOne\",\"Campaign.updateMany\",\"Campaign.updateManyAndReturn\",\"create\",\"update\",\"Campaign.upsertOne\",\"Campaign.deleteOne\",\"Campaign.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"Campaign.groupBy\",\"Campaign.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"name\",\"createdAt\",\"updatedAt\",\"daysPast\",\"isActive\",\"optionsConfig\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"contains\",\"startsWith\",\"endsWith\",\"not\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
+	graph: "PAsQChwAACwAMB0AAAQAEB4AACwAMB8CAAAAASABAC4AISFAAC8AISJAAC8AISMCAC0AISQgADAAISUBADEAIQEAAAABACABAAAAAQAgChwAACwAMB0AAAQAEB4AACwAMB8CAC0AISABAC4AISFAAC8AISJAAC8AISMCAC0AISQgADAAISUBADEAIQElAAAyACADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAHHwIAAAABIAEAAAABIUAAAAABIkAAAAABIwIAAAABJCAAAAABJQEAAAABAQgAAAkAIAcfAgAAAAEgAQAAAAEhQAAAAAEiQAAAAAEjAgAAAAEkIAAAAAElAQAAAAEBCAAACwAwAQgAAAsAMAcfAgA6ACEgAQA4ACEhQAA5ACEiQAA5ACEjAgA6ACEkIAA7ACElAQA8ACECAAAAAQAgCAAADgAgBx8CADoAISABADgAISFAADkAISJAADkAISMCADoAISQgADsAISUBADwAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBhUAADMAIBYAADQAIBcAADcAIBgAADYAIBkAADUAICUAADIAIAocAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjAgAbACEkIAAeACElAQAfACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAocAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhQAAdACEiQAAdACEjAgAbACEkIAAeACElAQAfACENFQAAJAAgFgAAKwAgFwAAJAAgGAAAJAAgGQAAJAAgJgIAAAABJwIAAAAEKAIAAAAEKQIAAAABKgIAAAABKwIAAAABLAIAAAABMAIAKgAhDhUAACQAIBgAACkAIBkAACkAICYBAAAAAScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACgAIQsVAAAkACAYAAAnACAZAAAnACAmQAAAAAEnQAAAAAQoQAAAAAQpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEwQAAmACEFFQAAJAAgGAAAJQAgGQAAJQAgJiAAAAABMCAAIwAhDhUAACEAIBgAACIAIBkAACIAICYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACAAIQ4VAAAhACAYAAAiACAZAAAiACAmAQAAAAEnAQAAAAUoAQAAAAUpAQAAAAEqAQAAAAErAQAAAAEsAQAAAAEtAQAAAAEuAQAAAAEvAQAAAAEwAQAgACEIJgIAAAABJwIAAAAFKAIAAAAFKQIAAAABKgIAAAABKwIAAAABLAIAAAABMAIAIQAhCyYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACIAIQUVAAAkACAYAAAlACAZAAAlACAmIAAAAAEwIAAjACEIJgIAAAABJwIAAAAEKAIAAAAEKQIAAAABKgIAAAABKwIAAAABLAIAAAABMAIAJAAhAiYgAAAAATAgACUAIQsVAAAkACAYAAAnACAZAAAnACAmQAAAAAEnQAAAAAQoQAAAAAQpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEwQAAmACEIJkAAAAABJ0AAAAAEKEAAAAAEKUAAAAABKkAAAAABK0AAAAABLEAAAAABMEAAJwAhDhUAACQAIBgAACkAIBkAACkAICYBAAAAAScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACgAIQsmAQAAAAEnAQAAAAQoAQAAAAQpAQAAAAEqAQAAAAErAQAAAAEsAQAAAAEtAQAAAAEuAQAAAAEvAQAAAAEwAQApACENFQAAJAAgFgAAKwAgFwAAJAAgGAAAJAAgGQAAJAAgJgIAAAABJwIAAAAEKAIAAAAEKQIAAAABKgIAAAABKwIAAAABLAIAAAABMAIAKgAhCCYIAAAAAScIAAAABCgIAAAABCkIAAAAASoIAAAAASsIAAAAASwIAAAAATAIACsAIQocAAAsADAdAAAEABAeAAAsADAfAgAtACEgAQAuACEhQAAvACEiQAAvACEjAgAtACEkIAAwACElAQAxACEIJgIAAAABJwIAAAAEKAIAAAAEKQIAAAABKgIAAAABKwIAAAABLAIAAAABMAIAJAAhCyYBAAAAAScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACkAIQgmQAAAAAEnQAAAAAQoQAAAAAQpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEwQAAnACECJiAAAAABMCAAJQAhCyYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BAAAAAS4BAAAAAS8BAAAAATABACIAIQAAAAAAAAExAQAAAAEBMUAAAAABBTECAAAAATICAAAAATMCAAAAATQCAAAAATUCAAAAAQExIAAAAAEBMQEAAAABAAAAAAUVAAYWAAcXAAgYAAkZAAoAAAAAAAUVAAYWAAcXAAgYAAkZAAoBAgECAwEFBgEGBwEHCAEJCgEKDAILDQMMDwENEQIOEgQREwESFAETFQIaGAUbGQs"
 };
 async function decodeBase64AsWasm(wasmBase64) {
 	const { Buffer } = await import("node:buffer");
@@ -836,6 +836,86 @@ function getPrisma() {
 	return prisma;
 }
 //#endregion
+//#region src/config/defaultDateData.config.ts
+var defaultDateConfig = {
+	startDay: {
+		monthNumber: 10,
+		dayNumber: 1,
+		year: 845
+	},
+	daysOfTheWeek: [
+		"Morndar",
+		"Tirdar",
+		"Middar",
+		"Lurdar",
+		"Fredar",
+		"Soredar",
+		"Sundar"
+	],
+	months: [
+		{
+			monthNumber: 1,
+			monthName: "Mraznik",
+			days: 30
+		},
+		{
+			monthNumber: 2,
+			monthName: "Volčnik",
+			days: 30
+		},
+		{
+			monthNumber: 3,
+			monthName: "Talnik",
+			days: 31
+		},
+		{
+			monthNumber: 4,
+			monthName: "Setven",
+			days: 30
+		},
+		{
+			monthNumber: 5,
+			monthName: "Cvetnik",
+			days: 30
+		},
+		{
+			monthNumber: 6,
+			monthName: "Travnik",
+			days: 31
+		},
+		{
+			monthNumber: 7,
+			monthName: "Žarnik",
+			days: 30
+		},
+		{
+			monthNumber: 8,
+			monthName: "Žetven",
+			days: 30
+		},
+		{
+			monthNumber: 9,
+			monthName: "Sadnik",
+			days: 31
+		},
+		{
+			monthNumber: 10,
+			monthName: "Listopad",
+			days: 30
+		},
+		{
+			monthNumber: 11,
+			monthName: "Meglen",
+			days: 30
+		},
+		{
+			monthNumber: 12,
+			monthName: "Mraknik",
+			days: 31
+		}
+	]
+};
+//#endregion
 //#region electron/campaignDays.ipc.ts
 function registerCampaignDaysIpc() {
 	ipcMain.handle("campaignDays:list", async () => {
@@ -845,7 +925,7 @@ function registerCampaignDaysIpc() {
 		const campaignName = await getPrisma().campaign.create({ data: { name } });
 		return {
 			...campaignName,
-			isActive: true,
+			optionsConfig: JSON.stringify(defaultDateConfig),
 			createdAt: campaignName.createdAt.toISOString(),
 			updatedAt: campaignName.updatedAt.toISOString()
 		};
