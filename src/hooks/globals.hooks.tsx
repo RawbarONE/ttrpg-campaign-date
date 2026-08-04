@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CampaignContext } from "../globals/context/context";
+import { CampaignContext, UiContext } from "../globals/context/context";
 
 export const useCampaignGlobal = () => {
 	const context = useContext(CampaignContext);
@@ -9,4 +9,14 @@ export const useCampaignGlobal = () => {
 	}
 
 	return context;
+};
+
+export const useOptionsGlobal = () => {
+	const optionContext = useContext(UiContext);
+
+	if (!optionContext) {
+		throw new Error("useOptionsGlobal must be used inside UiProvider");
+	}
+
+	return optionContext;
 };

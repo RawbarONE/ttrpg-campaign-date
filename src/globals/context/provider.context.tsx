@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { TCampaign } from "../../shared/types";
-import { CampaignContext } from "./context";
+import { CampaignContext, UiContext } from "./context";
 
 export const CampaignProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
@@ -35,4 +35,23 @@ export const CampaignProvider: React.FC<{ children: React.ReactNode }> = ({
 			{children}
 		</CampaignContext.Provider>
 	);
+};
+
+export const UiProvider: React.FC<{ children: React.ReactNode }> = ({
+	children,
+}) => {
+	const [optionsOpened, setOptionsOpened] = useState(false);
+
+	const toggleOptions = () => setOptionsOpened((prev) => !prev);
+
+	const value = useMemo(
+		() => ({
+			optionsOpened,
+			toggleOptions,
+		}),
+
+		[optionsOpened],
+	);
+
+	return <UiContext.Provider value={value}>{children}</UiContext.Provider>;
 };
