@@ -41,18 +41,27 @@ export const UiProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [optionsOpened, setOptionsOpened] = useState(false);
+	const [showDate, setShowDate] = useState({
+		dayOfWeek: true,
+		era: true,
+		year: true,
+	});
 
 	const toggleOptions = () => setOptionsOpened((prev) => !prev);
 	const closeOptions = () => setOptionsOpened(false);
+	const toggleDateOptions = (option: "dayOfWeek" | "era" | "year") =>
+		setShowDate((prev) => ({ ...prev, [option]: !prev }));
 
 	const value = useMemo(
 		() => ({
 			optionsOpened,
 			toggleOptions,
 			closeOptions,
+			toggleDateOptions,
+			showDate,
 		}),
 
-		[optionsOpened],
+		[optionsOpened, showDate],
 	);
 
 	return <UiContext.Provider value={value}>{children}</UiContext.Provider>;

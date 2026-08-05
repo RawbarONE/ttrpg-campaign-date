@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCurrentDate } from "../../hooks/currentDate.hooks";
-import { useCampaignGlobal } from "../../hooks/globals.hooks";
+import { useCampaignGlobal, useOptionsGlobal } from "../../hooks/globals.hooks";
 import * as S from "./date.layout.styles";
 import { getOptionsConfig } from "../../helpers/dateConfig.helper";
 
 export const CampaignDate: React.FC = () => {
 	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
+	const { showDate } = useOptionsGlobal();
 
 	const [clickAnimation, setClickAnimation] = useState<"add" | "remove" | null>(
 		null,
@@ -26,17 +27,25 @@ export const CampaignDate: React.FC = () => {
 	const removeDay = async () => {
 		if (!activeCampaign) return;
 
+		if (activeCampaign.daysPast <= 0) return;
+
 		await window.api.campaignDays.decrease(activeCampaign.id);
 		await refreshCampaignList();
 		setClickAnimation("remove");
 	};
 
+	useEffect(() => {
+		console.log("date component showDate: ", showDate.dayOfWeek);
+	}, [showDate.dayOfWeek]);
+
 	return (
 		<S.CampaignDateWrapper>
 			<S.DateContainer>
 				<S.Date>
-					{date.currentDayName} {date.currentDayNumber}.{date.currentMonthName},
-					3E {date.currentYear}
+					{showDate.dayOfWeek && `${date.currentDayName}`}{" "}
+					{date.currentDayNumber}.{date.currentMonthName},
+					{showDate.era && `${date.currentEra}E`}{" "}
+					{showDate.year && `${date.currentYear}`}
 				</S.Date>
 				<S.ButtonArea>
 					<S.DateButton
