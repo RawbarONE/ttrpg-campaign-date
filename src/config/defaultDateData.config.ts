@@ -1,7 +1,7 @@
 export const defaultConfig = {
 	startDay: {
-		monthNumber: 10,
 		dayNumber: 1,
+		monthNumber: 10,
 		year: 845,
 	},
 	daysOfTheWeek: [

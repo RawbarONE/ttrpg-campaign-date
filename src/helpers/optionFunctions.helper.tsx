@@ -50,3 +50,28 @@ export const handleDaysOfTheWeekChange = (
 		daysOfTheWeek: updatedDaysWeek,
 	};
 };
+
+export const handleStartDateChange = (
+	prop: "day" | "month" | "year",
+	value: number,
+	configData: TDateConfig,
+) => {
+	const updatedStartDate = { ...configData.startDay };
+
+	if (prop === "day") {
+		updatedStartDate.dayNumber = value;
+	}
+
+	if (prop === "month") {
+		updatedStartDate.monthNumber = value;
+	}
+
+	if (prop === "year") {
+		updatedStartDate.year = value;
+	}
+
+	return {
+		...configData,
+		startDay: updatedStartDate,
+	};
+};

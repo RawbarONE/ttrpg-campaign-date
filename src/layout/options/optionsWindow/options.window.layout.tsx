@@ -4,6 +4,7 @@ import {
 	handleDaysOfTheWeekChange,
 	handleMonthDaysChange,
 	handleMonthNameChange,
+	handleStartDateChange,
 } from "../../../helpers/optionFunctions.helper";
 import {
 	useCampaignGlobal,
@@ -39,15 +40,54 @@ export const Options: React.FC = () => {
 				<S.StartDayWrapper>
 					<S.StartElement>
 						<S.Label>Start Day</S.Label>
-						<S.Input $start />
+						<S.Input
+							$start
+							type="number"
+							placeholder={`${dateConfig.startDay.dayNumber}`}
+							onChange={(e) =>
+								setDateConfig((currentConfig) =>
+									handleStartDateChange(
+										"day",
+										parseInt(e.target.value),
+										currentConfig,
+									),
+								)
+							}
+						/>
 					</S.StartElement>
 					<S.StartElement>
 						<S.Label>Start Month</S.Label>
-						<S.Input $start />
+						<S.Input
+							$start
+							type="number"
+							placeholder={`${dateConfig.startDay.monthNumber}`}
+							onChange={(e) =>
+								setDateConfig((currentConfig) =>
+									handleStartDateChange(
+										"month",
+										parseInt(e.target.value),
+										currentConfig,
+									),
+								)
+							}
+						/>
 					</S.StartElement>
 					<S.StartElement>
 						<S.Label>Start Year</S.Label>
-						<S.Input $start />
+						<S.Input
+							$start
+							type="number"
+							placeholder={`${dateConfig.startDay.year}`}
+							onChange={(e) =>
+								setDateConfig((currentConfig) =>
+									handleStartDateChange(
+										"year",
+										parseInt(e.target.value),
+										currentConfig,
+									),
+								)
+							}
+						/>
 					</S.StartElement>
 				</S.StartDayWrapper>
 				<S.WeekWrapper>
