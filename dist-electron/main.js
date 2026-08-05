@@ -837,7 +837,7 @@ function getPrisma() {
 }
 //#endregion
 //#region src/config/defaultDateData.config.ts
-var defaultDateConfig = {
+var defaultConfig = {
 	startDay: {
 		monthNumber: 10,
 		dayNumber: 1,
@@ -925,7 +925,7 @@ function registerCampaignDaysIpc() {
 		const campaignName = await getPrisma().campaign.create({ data: { name } });
 		return {
 			...campaignName,
-			optionsConfig: JSON.stringify(defaultDateConfig),
+			optionsConfig: JSON.stringify(defaultConfig),
 			createdAt: campaignName.createdAt.toISOString(),
 			updatedAt: campaignName.updatedAt.toISOString()
 		};

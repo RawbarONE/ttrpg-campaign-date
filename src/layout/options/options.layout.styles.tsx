@@ -5,6 +5,7 @@ export const OptionsButtonWrapper = styled.div`
 	width: 100%;
 	justify-content: end;
 	padding-right: 2rem;
+	padding-bottom: 1rem;
 `;
 
 export const Button = styled.div`
