@@ -5,12 +5,13 @@ import {
 	handleMonthDaysChange,
 	handleMonthNameChange,
 	handleStartDateChange,
+	toggleDateOptions,
 } from "../../../helpers/optionFunctions.helper";
 import {
 	useCampaignGlobal,
 	useOptionsGlobal,
 } from "../../../hooks/globals.hooks";
-import { TDateConfig } from "../../../shared/types";
+import { TDateConfig, TDateOptionOptions } from "../../../shared/types";
 import * as S from "./options.window.layout.styles";
 import { defaultConfig } from "../../../config/defaultDateData.config";
 
@@ -34,6 +35,10 @@ export const Options: React.FC = () => {
 		[activeCampaign, closeOptions, dateConfig, refreshCampaignList],
 	);
 
+	const handleToggleDateOption = useCallback((prop: TDateOptionOptions) => {
+		setDateConfig((currentConfig) => toggleDateOptions(prop, currentConfig));
+		console.log("option window: ", prop);
+	}, []);
 	return (
 		<S.OptionsWrapper>
 			<S.LeftSection>
@@ -109,9 +114,31 @@ export const Options: React.FC = () => {
 						</S.WeekElement>
 					))}
 				</S.WeekWrapper>
-				<S.Button $type="apply" onClick={() => handleConfigUpdate("apply")}>
-					Apply
-				</S.Button>
+				<S.ButtonArea>
+					<S.Button $type="apply" onClick={() => handleConfigUpdate("apply")}>
+						Apply
+					</S.Button>
+					<S.ButtonDateArea>
+						<S.Button
+							$type="apply"
+							onClick={() => handleToggleDateOption("dayOfWeek")}
+						>
+							Show Day Of Week
+						</S.Button>
+						<S.Button
+							$type="apply"
+							onClick={() => handleToggleDateOption("era")}
+						>
+							Show Era
+						</S.Button>
+						<S.Button
+							$type="apply"
+							onClick={() => handleToggleDateOption("year")}
+						>
+							Show year
+						</S.Button>
+					</S.ButtonDateArea>
+				</S.ButtonArea>
 				<S.Button $type="reset" onClick={() => handleConfigUpdate("reset")}>
 					Reset
 				</S.Button>

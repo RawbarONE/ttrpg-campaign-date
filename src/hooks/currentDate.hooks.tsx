@@ -14,6 +14,7 @@ export const useCurrentDate = (
 	let currentMonthIndex = startDay.monthNumber - 1;
 	let currentDayNumber = currentDaysPast;
 	let currentYear = startDay.year;
+	const currentEra = startDay.era;
 
 	while (currentDayNumber > months[currentMonthIndex].days) {
 		currentDayNumber -= months[currentMonthIndex].days;
@@ -27,5 +28,11 @@ export const useCurrentDate = (
 
 	const currentMonthName = months[currentMonthIndex].monthName;
 
-	return { currentDayName, currentMonthName, currentDayNumber, currentYear };
+	return {
+		currentDayName,
+		currentMonthName,
+		currentDayNumber,
+		currentYear,
+		currentEra,
+	};
 };

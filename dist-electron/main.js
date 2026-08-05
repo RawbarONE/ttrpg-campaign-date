@@ -841,7 +841,8 @@ var defaultConfig = {
 	startDay: {
 		dayNumber: 1,
 		monthNumber: 10,
-		year: 845
+		year: 845,
+		era: 3
 	},
 	daysOfTheWeek: [
 		"Morndar",
@@ -913,7 +914,12 @@ var defaultConfig = {
 			monthName: "Mraknik",
 			days: 31
 		}
-	]
+	],
+	showDate: {
+		dayOfWeek: true,
+		era: true,
+		year: true
+	}
 };
 //#endregion
 //#region electron/ipc/campaignDays.ipc.ts

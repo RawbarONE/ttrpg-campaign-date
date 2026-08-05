@@ -95,3 +95,14 @@ export const DaysSection = styled.div`
 	justify-content: space-between;
 	width: 17rem;
 `;
+
+export const ButtonArea = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
+export const ButtonDateArea = styled.div`
+	display: flex;
+	flex-direction: row;
+	padding-left: 3rem;
+`;
