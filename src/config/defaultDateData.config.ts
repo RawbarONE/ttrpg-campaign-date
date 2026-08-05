@@ -1,4 +1,4 @@
-export const defaultDateConfig = {
+export const defaultConfig = {
 	startDay: {
 		monthNumber: 10,
 		dayNumber: 1,

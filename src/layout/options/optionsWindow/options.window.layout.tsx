@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { getOptionsConfig } from "../../../helpers/dateConfig.helper";
 import {
+	handleDaysOfTheWeekChange,
 	handleMonthDaysChange,
 	handleMonthNameChange,
 } from "../../../helpers/optionFunctions.helper";
@@ -10,6 +11,7 @@ import {
 } from "../../../hooks/globals.hooks";
 import { TDateConfig } from "../../../shared/types";
 import * as S from "./options.window.layout.styles";
+import { defaultConfig } from "../../../config/defaultDateData.config";
 
 export const Options: React.FC = () => {
 	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
@@ -18,13 +20,18 @@ export const Options: React.FC = () => {
 	);
 	const { closeOptions } = useOptionsGlobal();
 
-	const configUpdate = useCallback(async () => {
-		if (!activeCampaign) return;
+	const handleConfigUpdate = useCallback(
+		async (type: "apply" | "reset") => {
+			if (!activeCampaign) return;
 
-		await window.api.config.update(activeCampaign.id, dateConfig);
-		await refreshCampaignList();
-		closeOptions();
-	}, [activeCampaign, closeOptions, dateConfig, refreshCampaignList]);
+			const config = type === "apply" ? dateConfig : defaultConfig;
+
+			await window.api.config.update(activeCampaign.id, config);
+			await refreshCampaignList();
+			closeOptions();
+		},
+		[activeCampaign, closeOptions, dateConfig, refreshCampaignList],
+	);
 
 	return (
 		<S.OptionsWrapper>
@@ -32,51 +39,69 @@ export const Options: React.FC = () => {
 				<S.StartDayWrapper>
 					<S.StartElement>
 						<S.Label>Start Day</S.Label>
-						{/* <S.Input /> */}
+						<S.Input $start />
 					</S.StartElement>
 					<S.StartElement>
 						<S.Label>Start Month</S.Label>
-						{/* <S.Input /> */}
+						<S.Input $start />
 					</S.StartElement>
 					<S.StartElement>
 						<S.Label>Start Year</S.Label>
-						{/* <S.Input /> */}
+						<S.Input $start />
 					</S.StartElement>
 				</S.StartDayWrapper>
 				<S.WeekWrapper>
 					{dateConfig.daysOfTheWeek.map((day, idx) => (
 						<S.WeekElement key={idx}>
 							<S.Label>{realDays[idx]}</S.Label>
-							<S.Input value={day} placeholder={day} onChange={() => {}} />
+							<S.Input
+								placeholder={day}
+								onChange={(e) =>
+									setDateConfig((currentConfig) =>
+										handleDaysOfTheWeekChange(
+											idx,
+											e.target.value,
+											currentConfig,
+										),
+									)
+								}
+							/>
 						</S.WeekElement>
 					))}
 				</S.WeekWrapper>
-				<S.ApplyButton onClick={configUpdate}>Apply</S.ApplyButton>
+				<S.Button $type="apply" onClick={() => handleConfigUpdate("apply")}>
+					Apply
+				</S.Button>
+				<S.Button $type="reset" onClick={() => handleConfigUpdate("reset")}>
+					Reset
+				</S.Button>
 			</S.LeftSection>
 			<S.RightSection>
 				<S.MonthWrapper>
 					{dateConfig.months.map((month, idx) => (
 						<S.MonthElement key={idx}>
-							<S.Label>{realMonths[idx]}</S.Label>
-							<S.Input
-								value={month.monthName}
-								placeholder={month.monthName}
-								onChange={(e) =>
-									setDateConfig((currentConfig) =>
-										handleMonthNameChange(idx, e.target.value, currentConfig),
-									)
-								}
-							/>
-							<S.Label>Days:</S.Label>
-							<S.Input
-								value={month.days}
-								placeholder={`${month.days}`}
-								onChange={(e) =>
-									setDateConfig((currentConfig) =>
-										handleMonthDaysChange(idx, e.target.value, currentConfig),
-									)
-								}
-							/>
+							<S.MonthSection>
+								<S.Label>{realMonths[idx]}</S.Label>
+								<S.Input
+									placeholder={month.monthName}
+									onChange={(e) =>
+										setDateConfig((currentConfig) =>
+											handleMonthNameChange(idx, e.target.value, currentConfig),
+										)
+									}
+								/>
+							</S.MonthSection>
+							<S.DaysSection>
+								<S.Label>Days:</S.Label>
+								<S.Input
+									placeholder={`${month.days}`}
+									onChange={(e) =>
+										setDateConfig((currentConfig) =>
+											handleMonthDaysChange(idx, e.target.value, currentConfig),
+										)
+									}
+								/>
+							</S.DaysSection>
 						</S.MonthElement>
 					))}
 				</S.MonthWrapper>

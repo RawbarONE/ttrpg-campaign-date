@@ -35,3 +35,18 @@ export const handleMonthDaysChange = (
 		months: updatedDaysMonth,
 	};
 };
+
+export const handleDaysOfTheWeekChange = (
+	idx: number,
+	value: string,
+	configData: TDateConfig,
+) => {
+	const updatedDaysWeek = [...configData.daysOfTheWeek];
+
+	updatedDaysWeek[idx] = value;
+
+	return {
+		...configData,
+		daysOfTheWeek: updatedDaysWeek,
+	};
+};
