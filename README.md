@@ -66,3 +66,12 @@ npm run release
 * Prisma migration files and local SQLite database files are not tracked by the repository.
 * Because `better-sqlite3` is a native dependency, it may need to be rebuilt for Electron after dependency or Electron version changes.
 * The application was developed and tested using **Node.js 24.18.1** and **Visual Studio 2026 Build Tools** on Windows.
+
+### To Fix
+
+* handle negative numbers
+* campaign creation by pressing enter
+
+### To Add
+
+* transfer db
