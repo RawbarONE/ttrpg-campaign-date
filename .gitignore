@@ -23,6 +23,19 @@ dist-ssr
 *.sln
 *.sw?
 
+# Electron builder output
+*.blockmap
+*.exe
+
+# Build output
+dist/
+dist-electron/
+release/
+out/
+
+# Optional if you generate installer folders
+*-unpacked/
+
 # SQLite database
 *.db
 *.db-journal

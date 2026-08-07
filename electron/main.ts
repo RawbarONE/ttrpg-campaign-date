@@ -30,9 +30,17 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 
 let win: BrowserWindow | null;
 
+const getWindowIcon = () => {
+	const iconFile = process.platform === "win32" ? "icon.ico" : "icon.png";
+
+	return app.isPackaged
+		? path.join(process.resourcesPath, "build", iconFile)
+		: path.join(process.cwd(), "build", iconFile);
+};
+
 function createWindow() {
 	win = new BrowserWindow({
-		icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+		icon: getWindowIcon(),
 		webPreferences: {
 			preload: path.join(__dirname, "preload.mjs"),
 		},
