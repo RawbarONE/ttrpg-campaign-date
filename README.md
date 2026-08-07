@@ -1,30 +1,68 @@
-# React + TypeScript + Vite
+## Development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a personal project developed for a D&D campaign I'm running. The application is a simple in-game date tracker that keeps track of the date from the start of a campaign.
 
-Currently, two official plugins are available:
+The calendar can be customized in the options, including month names, day names, and the number of days in each month.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Leap years are currently not supported, as the calendar used in my campaign does not include them.
 
-## Expanding the ESLint configuration
+### Requirements
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* [Node.js](https://nodejs.org/) 22+
+* npm
+* Git
 
-- Configure the top-level `parserOptions` property like this:
+This project uses [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3), which is a native Node module.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+On Windows, building or rebuilding native dependencies may require:
+
+* **Visual Studio Build Tools**
+
+  * `Desktop development with C++`
+* **Python 3** — required by `node-gyp`
+
+> The full Visual Studio IDE is not required.
+
+---
+
+### Setup
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+cd ttrpg-campaign-date
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Install dependencies:
+
+```bash
+npm install
+```
+
+Build the application:
+
+```bash
+npm run release
+```
+
+---
+
+### Stack
+
+* Electron
+* React
+* TypeScript
+* Vite
+* Emotion
+* Prisma
+* SQLite / `better-sqlite3`
+
+---
+
+### Notes
+
+* Prisma Client is generated locally and is not tracked by Git.
+* Prisma migration files and local SQLite database files are not tracked by the repository.
+* Because `better-sqlite3` is a native dependency, it may need to be rebuilt for Electron after dependency or Electron version changes.
+* The application was developed and tested using **Node.js 24.18.1** and **Visual Studio 2026 Build Tools** on Windows.
