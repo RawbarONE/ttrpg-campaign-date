@@ -59,8 +59,8 @@ release/
 # Generated Prisma Client
 # =========================================================
 
-src/generated/prisma/
-src/prisma/migrations
+/generated/prisma/
+/prisma/migrations
 
 
 
