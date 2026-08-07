@@ -34,8 +34,8 @@ const DropdownCampaign: React.FC = () => {
 	};
 
 	const campaignName = useMemo((): string => {
-		if (campaignsList.length === 0) return "Campaign Name";
-		return activeCampaign?.name ?? "Campaign Name";
+		if (campaignsList.length === 0) return "Create Campaign";
+		return activeCampaign?.name ?? "Create Campaign";
 	}, [campaignsList, activeCampaign]);
 
 	const dropdownState = () => {
