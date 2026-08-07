@@ -82,8 +82,6 @@ export const toggleDateOptions = (
 	configData: TDateConfig,
 ): TDateConfig => {
 	const showDate = configData.showDate ?? defaultConfig.showDate;
-	console.log("helpers toggle config data: ", configData);
-	console.log("helpers toggle showDate data: ", showDate);
 
 	return {
 		...configData,

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { defaultConfig } from "../../../config/defaultDateData.config";
 import { getOptionsConfig } from "../../../helpers/dateConfig.helper";
 import {
 	handleDaysOfTheWeekChange,
@@ -13,7 +14,6 @@ import {
 } from "../../../hooks/globals.hooks";
 import { TDateConfig, TDateOptionOptions } from "../../../shared/types";
 import * as S from "./options.window.layout.styles";
-import { defaultConfig } from "../../../config/defaultDateData.config";
 
 export const Options: React.FC = () => {
 	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
@@ -39,6 +39,7 @@ export const Options: React.FC = () => {
 		setDateConfig((currentConfig) => toggleDateOptions(prop, currentConfig));
 		console.log("option window: ", prop);
 	}, []);
+
 	return (
 		<S.OptionsWrapper>
 			<S.LeftSection>
