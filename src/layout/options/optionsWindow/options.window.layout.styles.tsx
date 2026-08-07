@@ -21,10 +21,13 @@ export const MonthWrapper = styled.div`
 export const WeekWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+	gap: 1rem;
 `;
 
 export const StartDayWrapper = styled.div`
 	display: flex;
+	gap: 1rem;
 `;
 
 export const LeftSection = styled.div`
@@ -54,11 +57,18 @@ export const Input = styled.input<{ $start?: boolean }>`
 
 	&::placeholder {
 		color: #eaeaea7a;
+		${({ $start }) =>
+			$start &&
+			css`
+				text-align: center;
+			`}
 	}
 `;
 
 export const StartElement = styled.div`
 	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 `;
 
 export const MonthElement = styled.div`
@@ -68,9 +78,16 @@ export const MonthElement = styled.div`
 
 export const WeekElement = styled.div`
 	display: flex;
+	align-items: center;
+	width: 21rem;
+	justify-content: space-between;
+	gap: 0.3rem;
 `;
 
-export const Button = styled.button<{ $type: "apply" | "reset" }>`
+export const Button = styled.button<{
+	$type: "apply" | "reset";
+	$active?: boolean;
+}>`
 	display: flex;
 	width: 5rem;
 	height: 2rem;
@@ -81,6 +98,12 @@ export const Button = styled.button<{ $type: "apply" | "reset" }>`
 		$type === "reset" &&
 		css`
 			background-color: red;
+		`}
+
+	${({ $active }) =>
+		$active &&
+		css`
+			background-color: green;
 		`}
 `;
 
@@ -96,6 +119,12 @@ export const DaysSection = styled.div`
 	width: 17rem;
 `;
 
+export const ButtonSection = styled.section`
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+`;
+
 export const ButtonArea = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -105,4 +134,5 @@ export const ButtonDateArea = styled.div`
 	display: flex;
 	flex-direction: row;
 	padding-left: 3rem;
+	gap: 0.3rem;
 `;

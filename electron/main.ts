@@ -1,11 +1,11 @@
 import { app, BrowserWindow } from "electron";
-import { createRequire } from "node:module";
-import { fileURLToPath, pathToFileURL } from "node:url";
+// import { createRequire } from "node:module";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { registerIpc } from "./";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const require = createRequire(import.meta.url);
+// const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // The built directory structure
@@ -29,17 +29,6 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 	: RENDERER_DIST;
 
 let win: BrowserWindow | null;
-
-// after app is ready OR before PrismaClient is created (best: before registerIpc creates Prisma)
-const dbPath = path.join(process.env.APP_ROOT!, "prisma", "dev.db");
-
-// Prisma SQLite URLs work best with forward slashes / file URL
-process.env.DATABASE_URL = pathToFileURL(dbPath).href.replace(
-	"file:///",
-	"file:",
-);
-
-console.log("DATABASE_URL =", process.env.DATABASE_URL);
 
 function createWindow() {
 	win = new BrowserWindow({

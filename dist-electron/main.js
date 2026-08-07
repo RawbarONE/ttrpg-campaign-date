@@ -1,10 +1,11 @@
 import { BrowserWindow, app, ipcMain } from "electron";
 import { createRequire } from "node:module";
-import { fileURLToPath, pathToFileURL } from "node:url";
 import * as path$1 from "node:path";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import Database from "better-sqlite3";
 import * as runtime from "@prisma/client/runtime/client";
+import fs from "node:fs";
 //#region node_modules/@prisma/debug/dist/index.mjs
 var __defProp = Object.defineProperty;
 var __export = (target, all) => {
@@ -828,11 +829,46 @@ globalThis["__dirname"] = path$1.dirname(fileURLToPath(import.meta.url));
 */
 var PrismaClient = getPrismaClientClass();
 //#endregion
+//#region electron/db/migrateDatabase.ts
+var runMigrations = (dbFile) => {
+	const db = new Database(dbFile);
+	db.exec(`
+		CREATE TABLE IF NOT EXISTS _app_migrations (
+			id TEXT PRIMARY KEY,
+			appliedAt TEXT NOT NULL
+		);
+	`);
+	const migrationsDir = app.isPackaged ? path.join(process.resourcesPath, "prisma", "migrations") : path.join(process.cwd(), "prisma", "migrations");
+	if (!fs.existsSync(migrationsDir)) {
+		console.warn("Migrations folder not found:", migrationsDir);
+		db.close();
+		return;
+	}
+	const migrationFolders = fs.readdirSync(migrationsDir).sort();
+	for (const folder of migrationFolders) {
+		const migrationSqlPath = path.join(migrationsDir, folder, "migration.sql");
+		if (!fs.existsSync(migrationSqlPath)) continue;
+		if (db.prepare("SELECT id FROM _app_migrations WHERE id = ?").get(folder)) continue;
+		const sql = fs.readFileSync(migrationSqlPath, "utf8");
+		db.transaction(() => {
+			db.exec(sql);
+			db.prepare("INSERT INTO _app_migrations (id, appliedAt) VALUES (?, ?)").run(folder, (/* @__PURE__ */ new Date()).toISOString());
+		})();
+	}
+	db.close();
+};
+//#endregion
 //#region electron/db/prisma.ts
 var prisma = null;
 function getPrisma() {
 	if (prisma) return prisma;
-	prisma = new PrismaClient({ adapter: new PrismaBetterSqlite3AdapterFactory({ url: `file:${(!app.isPackaged ? path.join(process.cwd(), "prisma", "dev.db") : path.join(app.getPath("userData"), "campaign-dater.sqlite")).replace(/\\/g, "/")}` }) });
+	const isDev = !app.isPackaged;
+	const dbFile = isDev ? path.join(process.cwd(), "prisma", "dev.db") : path.join(app.getPath("userData"), "ttrpg-date.sqlite");
+	if (!isDev) {
+		fs.mkdirSync(path.dirname(dbFile), { recursive: true });
+		runMigrations(dbFile);
+	}
+	prisma = new PrismaClient({ adapter: new PrismaBetterSqlite3AdapterFactory({ url: `file:${dbFile.replace(/\\/g, "/")}` }) });
 	return prisma;
 }
 //#endregion
@@ -989,9 +1025,6 @@ var MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
 var RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, "public") : RENDERER_DIST;
 var win;
-var dbPath = path.join(process.env.APP_ROOT, "prisma", "dev.db");
-process.env.DATABASE_URL = pathToFileURL(dbPath).href.replace("file:///", "file:");
-console.log("DATABASE_URL =", process.env.DATABASE_URL);
 function createWindow() {
 	win = new BrowserWindow({
 		icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),

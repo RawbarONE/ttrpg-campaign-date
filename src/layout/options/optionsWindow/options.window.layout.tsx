@@ -115,34 +115,39 @@ export const Options: React.FC = () => {
 						</S.WeekElement>
 					))}
 				</S.WeekWrapper>
-				<S.ButtonArea>
-					<S.Button $type="apply" onClick={() => handleConfigUpdate("apply")}>
-						Apply
+				<S.ButtonSection>
+					<S.ButtonArea>
+						<S.Button $type="apply" onClick={() => handleConfigUpdate("apply")}>
+							Apply
+						</S.Button>
+						<S.ButtonDateArea>
+							<S.Button
+								$type="apply"
+								onClick={() => handleToggleDateOption("dayOfWeek")}
+								$active={dateConfig.showDate.dayOfWeek}
+							>
+								Show Day Of Week
+							</S.Button>
+							<S.Button
+								$type="apply"
+								onClick={() => handleToggleDateOption("era")}
+								$active={dateConfig.showDate.era}
+							>
+								Show Era
+							</S.Button>
+							<S.Button
+								$type="apply"
+								onClick={() => handleToggleDateOption("year")}
+								$active={dateConfig.showDate.year}
+							>
+								Show year
+							</S.Button>
+						</S.ButtonDateArea>
+					</S.ButtonArea>
+					<S.Button $type="reset" onClick={() => handleConfigUpdate("reset")}>
+						Reset
 					</S.Button>
-					<S.ButtonDateArea>
-						<S.Button
-							$type="apply"
-							onClick={() => handleToggleDateOption("dayOfWeek")}
-						>
-							Show Day Of Week
-						</S.Button>
-						<S.Button
-							$type="apply"
-							onClick={() => handleToggleDateOption("era")}
-						>
-							Show Era
-						</S.Button>
-						<S.Button
-							$type="apply"
-							onClick={() => handleToggleDateOption("year")}
-						>
-							Show year
-						</S.Button>
-					</S.ButtonDateArea>
-				</S.ButtonArea>
-				<S.Button $type="reset" onClick={() => handleConfigUpdate("reset")}>
-					Reset
-				</S.Button>
+				</S.ButtonSection>
 			</S.LeftSection>
 			<S.RightSection>
 				<S.MonthWrapper>
