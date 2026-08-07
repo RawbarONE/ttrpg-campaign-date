@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useCurrentDate } from "../../hooks/currentDate.hooks";
-import { useCampaignGlobal, useOptionsGlobal } from "../../hooks/globals.hooks";
-import * as S from "./date.layout.styles";
+import React, { useState } from "react";
 import { getOptionsConfig } from "../../helpers/dateConfig.helper";
+import { useCurrentDate } from "../../hooks/currentDate.hooks";
+import { useCampaignGlobal } from "../../hooks/globals.hooks";
+import * as S from "./date.layout.styles";
 
 export const CampaignDate: React.FC = () => {
 	const { activeCampaign, refreshCampaignList } = useCampaignGlobal();
-	const { showDate } = useOptionsGlobal();
-
 	const [clickAnimation, setClickAnimation] = useState<"add" | "remove" | null>(
 		null,
 	);
-
 	const optionsConfig = getOptionsConfig(activeCampaign?.optionsConfig);
+	const showDate = optionsConfig.showDate;
 
 	const date = useCurrentDate(activeCampaign?.daysPast ?? 0, optionsConfig);
 
@@ -33,10 +31,6 @@ export const CampaignDate: React.FC = () => {
 		await refreshCampaignList();
 		setClickAnimation("remove");
 	};
-
-	useEffect(() => {
-		console.log("date component showDate: ", showDate.dayOfWeek);
-	}, [showDate.dayOfWeek]);
 
 	return (
 		<S.CampaignDateWrapper>
