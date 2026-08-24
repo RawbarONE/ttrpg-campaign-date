@@ -17,13 +17,26 @@ export function registerCampaignDaysIpc() {
 
 	ipcMain.handle("campaignDays:create", async (_, name: string) => {
 		const prisma = getPrisma();
-		const campaignName = await prisma.campaign.create({ data: { name } });
+
+		const campaign = await prisma.$transaction(async (tx) => {
+			await tx.campaign.updateMany({
+				where: { isActive: true },
+				data: { isActive: false },
+			});
+
+			return tx.campaign.create({
+				data: {
+					name,
+					isActive: true,
+					optionsConfig: JSON.stringify(defaultConfig),
+				},
+			});
+		});
 
 		return {
-			...campaignName,
-			optionsConfig: JSON.stringify(defaultConfig),
-			createdAt: campaignName.createdAt.toISOString(),
-			updatedAt: campaignName.updatedAt.toISOString(),
+			...campaign,
+			createdAt: campaign.createdAt.toISOString(),
+			updatedAt: campaign.updatedAt.toISOString(),
 		};
 	});
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 interface ICreateCampaignProps {
 	availableCampaigns: () => void;
+	onCampaignCreation: () => void;
 }
 
 export const CreateCampaign: React.FC<ICreateCampaignProps> = (
@@ -23,7 +24,10 @@ export const CreateCampaign: React.FC<ICreateCampaignProps> = (
 				value={name}
 				onChange={(e) => setName(e.target.value)}
 				onKeyDown={(e) => {
-					if (e.key === "Enter") createCampaign();
+					if (e.key === "Enter") {
+						createCampaign();
+						p.onCampaignCreation();
+					}
 				}}
 				placeholder={"New campaign..."}
 			/>

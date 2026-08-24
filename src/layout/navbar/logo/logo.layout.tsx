@@ -66,7 +66,10 @@ const DropdownCampaign: React.FC = () => {
 			{dropdownOpen && (
 				<S.CampaignList>
 					<S.CreateCampaignWrapper>
-						<CreateCampaign availableCampaigns={refreshCampaignList} />
+						<CreateCampaign
+							availableCampaigns={refreshCampaignList}
+							onCampaignCreation={dropdownState}
+						/>
 					</S.CreateCampaignWrapper>
 					{campaignsList.map((c) => (
 						<S.CampaignElement key={c.id}>
