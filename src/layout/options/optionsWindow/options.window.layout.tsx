@@ -49,6 +49,7 @@ export const Options: React.FC = () => {
 						<S.Input
 							$start
 							type="number"
+							min="1"
 							placeholder={`${dateConfig.startDay.dayNumber}`}
 							onChange={(e) =>
 								setDateConfig((currentConfig) =>
@@ -66,6 +67,7 @@ export const Options: React.FC = () => {
 						<S.Input
 							$start
 							type="number"
+							min="1"
 							placeholder={`${dateConfig.startDay.monthNumber}`}
 							onChange={(e) =>
 								setDateConfig((currentConfig) =>
@@ -83,6 +85,7 @@ export const Options: React.FC = () => {
 						<S.Input
 							$start
 							type="number"
+							min="1"
 							placeholder={`${dateConfig.startDay.year}`}
 							onChange={(e) =>
 								setDateConfig((currentConfig) =>
@@ -167,6 +170,8 @@ export const Options: React.FC = () => {
 							<S.DaysSection>
 								<S.Label>Days:</S.Label>
 								<S.Input
+									type="number"
+									min="1"
 									placeholder={`${month.days}`}
 									onChange={(e) =>
 										setDateConfig((currentConfig) =>

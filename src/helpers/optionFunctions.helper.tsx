@@ -28,11 +28,15 @@ export const handleMonthDaysChange = (
 	value: string,
 	configData: TDateConfig,
 ) => {
+	const valueNumber = Number(value);
+
+	if (valueNumber <= 0) return configData;
+
 	const updatedDaysMonth = [...configData.months];
 
 	updatedDaysMonth[idx] = {
 		...updatedDaysMonth[idx],
-		days: Number(value),
+		days: valueNumber,
 	};
 
 	return {
@@ -61,6 +65,7 @@ export const handleStartDateChange = (
 	value: number,
 	configData: TDateConfig,
 ) => {
+	if (value <= 0) return configData;
 	const updatedStartDate = { ...configData.startDay };
 
 	if (prop === "day") updatedStartDate.dayNumber = value;
