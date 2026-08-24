@@ -22,6 +22,9 @@ export const CreateCampaign: React.FC<ICreateCampaignProps> = (
 			<Input
 				value={name}
 				onChange={(e) => setName(e.target.value)}
+				onKeyDown={(e) => {
+					if (e.key === "Enter") createCampaign();
+				}}
 				placeholder={"New campaign..."}
 			/>
 			<Create onClick={createCampaign}>+</Create>
@@ -34,6 +37,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
 	display: flex;
 	flex-direction: row;
+	gap: 0.2rem;
 `;
 
 export const Input = styled.input`
